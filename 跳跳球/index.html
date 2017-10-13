@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>跳跳球</title>
+		<style type="text/css">
+			*{
+				margin:0;
+				padding: 0;
+			}
+			#ball{
+				width: 100px;
+				height: 100px;
+				border-radius: 50%;
+				background: #00cccc;
+				position: absolute;
+				left: 50px;
+				top: 50px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="ball"></div>
+		<script type="text/javascript">
+			var ball = document.getElementById("ball");
+			var speedY = 0;
+			var speedX = 50;
+			var time = null;
+			var maxY = document.documentElement.clientHeight - ball.offsetHeight;
+			var maxX = document.documentElement.clientWidth - ball.offsetWidth;
+			ball.onmousedown = function(e){
+				var e=e||window.event;
+				var clickX = e.clientX-ball.offsetLeft;
+				var clickY = e.clientY-ball.offsetTop;
+				document.onmousemove = function(e){
+					var e = e||window.event;
+					speedX = e.movementX;
+					speedY = e.movementY;
+					var x = e.clientX - clickX;
+					var y = e.clientY - clickY;
+					if(x>=maxX){  
+						x = maxX;
+					}
+					if(x<=0){
+						x=0;
+					}
+					if(y>=maxY){
+						y=maxY;
+					}
+					if(y<=0){
+						y=0;
+					}
+					ball.style.top = y+'px';
+					ball.style.left = x+'px';
+				}
+				document.onmouseup = function(){
+					document.onmousemove = null;
+					move();
+				}
+				
+			}
+			function move(){
+				clearInterval(time);
+				time = setInterval(function(){
+					speedY+=2;
+					var t = ball.offsetTop + speedY;
+					var l = ball.offsetLeft + speedX;
+					if(t>=maxY){
+						t=maxY;
+						speedY*=-0.8;
+						speedX*=0.8;
+					}
+					if(t<=0){
+						t=0;
+						speedY*=-0.8;
+					}
+					if(l>=maxX){
+						l=maxX;
+						speedX*=-0.8;
+					}
+					if(l<=0){
+						l=0;
+						speedX*=-0.8;
+					}
+					if(Math.abs(speedY)<1){
+						speedY = 0;
+					}
+					if(Math.abs(speedX)<1){
+						speedX = 0;
+					}
+					if(speedX==0&&speedY==0&&t==maxY){
+						clearInterval(time);
+					}
+					ball.style.top = t+'px';
+					ball.style.left = l +'px';
+					
+				},20)
+			}
+		</script>
+	</body>
+</html>

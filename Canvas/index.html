@@ -1,0 +1,61 @@
+ <!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style type="text/css">
+		</style>
+	</head>
+	<body>
+		<canvas id="can" width="400px" height="400px" style="border:2px solid #00cccc;display:block;margin:100px auto 0"></canvas>
+		
+		<script type="text/javascript">
+			var can = document.getElementById("can");
+//	参数 contextID 指定了您想要在画布上绘制的类型  即二维绘图
+			var ctx = can.getContext("2d");
+//			绘制矩形 ，fillStyle属性可以设置颜色、渐变或者图案  fillRect(x,y,width,height)定义了矩形当前的填充方式
+			/*ctx.fillStyle="red";
+			ctx.fillRect(0,0,100,100);*/
+//			绘制直线  moveTo(x,y)开始坐标      LineTo(x,y)结束坐标
+			/*ctx.moveTo(0,0);
+			ctx.lineTo(400,400);
+			ctx.moveTo(400,0);
+			ctx.lineTo(0,400);
+			ctx.strokeStyle = "aqua";
+			ctx.stroke();*/
+//	绘制圆形    arc(x,y,r,start,stop,true/false)   true/false分别代表顺时针、逆时针
+			/*ctx.arc(200,200,50,0,Math.PI*2,true);
+			ctx.strokeStyle = "blue";
+			ctx.stroke();
+			ctx.fillStyle = "aquamarine";
+			ctx.fill();*/
+//	绘制文本   两种方法  fillText(text,x,y,maxWidth)设置实心字体
+			//ctx.font = "40px  楷体";
+			//ctx.fillText("Hello,world",30,45);
+			//设置空心字体
+			//ctx.strokeText("我一点都不好",60,90);
+//	渐变属性  两种形式
+			//	一、创建线性渐变 createLinearGradient(x,y,x1,y1);
+			/*var gradient = ctx.createLinearGradient(0,0,100,100);
+			gradient.addColorStop(0,"red");
+			gradient.addColorStop(0.5,"blue");
+			gradient.addColorStop(1,"yellow");
+			ctx.fillStyle = gradient;
+			ctx.strokeStyle = gradient;
+			ctx.fillText("hello world",30,45);
+			ctx.strokeText("你好，美女",45,90);*/
+			// 二、创建径向/圆渐变  createRadialGradient(x,y,r,x1,y1,r1);
+			var gradient = ctx.createRadialGradient(200,200,20,200,200,80);
+			gradient.addColorStop(0,"red");
+			gradient.addColorStop(0.25,"green");
+			gradient.addColorStop(0.5,"yellow");
+			gradient.addColorStop(0.75,"blue");
+			gradient.addColorStop(1,"pink");
+			ctx.beginPath();
+			ctx.arc(200,200,80,Math.PI*2,false);
+			ctx.globalAlpha = 0.9;
+			ctx.fillStyle = gradient;
+			ctx.fill();
+		</script>
+	</body>
+</html>

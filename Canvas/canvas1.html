@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Canvas</title>
+	</head>
+	<body>
+		<canvas id="can" width="400" height="400" style="border: 2px solid #00cccc;display: block;margin:100px auto 0;"></canvas>
+		<script type="text/javascript">
+			var can = document.getElementById("can");
+			//getContext("2d")制定了画布的类型，即二维绘图
+			var ctx = can.getContext("2d");
+//	填充一个矩形	fillStyle方法可以设置颜色、图案、渐变 fillRect(x,y,w,h)
+			/*ctx.fillStyle = "aqua";
+			ctx.fillRect(0,0,100,100);*/
+//	绘制直线  moveTo(x,y)起点     lineTo(x,y)终点
+			/*ctx.moveTo(400,0);
+			ctx.lineTo(0,400);
+			ctx.strokeStyle = "aqua";
+			ctx.stroke();*/
+//	绘制圆形  arc(x,y,r,start,stop,false/true)
+			/*ctx.arc(200,200,50,0,Math.PI*2,true);//Math.PI半圆
+			ctx.strokeStyle = "blue";
+			ctx.stroke();
+			ctx.fillStyle = "chartreuse";
+			ctx.fill();
+//	绘制文本  两种方法   font 定义字体和字号
+		//	第一种方法：实心文本  fillText(text,x,y,maxWidth);
+			/*ctx.font = "60px 楷体";
+			ctx.fillText("Smile",0,400);*/
+		//	第二种方法：空心字体 strokeText();
+			/*ctx.font = "60px 宋体";
+			ctx.strokeText("Sun",0,400);*/
+//	绘制渐变  两种形式：
+		// 第一种：creatLinearGradient(x,y,x1,y1);线性渐变
+		var gra = ctx.createLinearGradient(0,0,100,100);
+		gra.addColorStop(0,"blue");
+		gra.addColorStop(1,"red");
+		ctx.fillStyle = gra;
+		ctx.fillRect(0,0,100,100);
+		//第二种：creatRadialGradient(x,y,r,x1,y1,r1);径向/圆
+		var gra1 = ctx.createRadialGradient(200,200,30,200,200,80);
+		gra1.addColorStop(0,"red");
+		gra1.addColorStop(0.25,"orange");
+		gra1.addColorStop(0.5,"yellow");
+		gra1.addColorStop(0.75,"green");
+		gra1.addColorStop(1,"pink");
+		ctx.arc(200,200,90,0,Math.PI*2,true);
+		ctx.fillStyle = gra1;
+		ctx.fill();
+		</script>
+	</body>
+</html>

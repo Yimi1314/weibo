@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>新浪微博评论</title>
+		<style type="text/css">
+			*{
+				margin:0;
+				padding:0;
+			}
+			body{
+				background: #00cccc;
+			}
+			.outer{
+				width: 600px;
+				padding:20px 40px;
+				margin:20px auto;
+				background: #fff;
+				border-radius: 8px;
+			}
+			.head{
+				font-size: 20px;
+			}
+			#userName{
+				font-size: 20px;
+				outline: none;
+				padding:2px 8px;
+				margin-bottom: 20px;
+			}
+			#userWords{
+				width: 100%;
+				height: 100px;
+				outline: none;
+				resize: none;
+				font-size: 14px;
+				padding:10px 0;
+			}
+			.words-footer{
+				margin-top: 20px;
+				line-height: 30px;
+				font-size: 20px;
+			}
+			#btn{
+				float: right;
+				width: 80px;
+				height: 30px;
+				border:none;
+				background: #ccc;
+				outline: none;
+				color: #fff;
+				font-size: 14px;
+				border-radius: 4px;
+			}
+			#mylist{
+				margin-top: 20px;
+			}
+			#mylist li{
+				list-style: none;
+				margin-bottom: 20px;
+				position: relative;
+				overflow: hidden;
+			}
+			#mylist li img{
+				float: left;
+				width: 50px;
+				height: 50px;
+				border-radius: 50%;
+			}
+			.right{
+				float: right;
+				width: 530px;
+			}
+			.top a{
+				float: right;
+				text-decoration: underline;
+				color:gray;
+			}
+			.top a:hover{
+				color:orange;
+			}
+			.words{
+				margin-top: 10px;
+	
+			}
+		</style>
+	</head>
+	<body>
+		<div class="outer">
+			<div class="head">
+				用户&nbsp;:&nbsp;<input type="text" id="userName">
+			</div>
+			<textarea id="userWords"></textarea>
+			<div class="words-footer">
+				<span id="WordsNum">还可以输入200个字</span>
+				<button id="btn">发布</button>
+			</div>
+			<ul id="mylist">
+				<!-- <li>
+					<img src="img/1.jpg">
+					<div class="right">
+						<p class="top">
+							<span class="name">刘朋</span>
+							<a href="#" id="remBtn">删除</a>
+						</p>
+						<p class="words">发哈说的话好看啦和法律角度观看啥接口给恢复健康的</p>
+					</div>
+				</li> -->
+			</ul>
+		</div>
+		<script type="text/javascript" src="js/tween.js"></script>
+		<script type="text/javascript">
+			function getID(str){
+				return document.getElementById(str);
+			}
+			var userName = getID("userName");
+			var userWords = getID("userWords");
+			var btn = getID("btn");
+			var WordsNum = getID("WordsNum");
+			var mylist = getID("mylist");
+			userName.oninput = function(){
+				judge();
+			}
+			userWords.oninput = function(){
+				judge();
+	//	动态获取userWords的长度
+				var wLength = 200-userWords.value.length;
+	//	判断输入字符长度是否达到最大值
+				if(wLength<=0){
+					wLength = 0;
+					userWords.value = userWords.value.substring(applicationCache,200);
+				}
+				WordsNum.innerHTML = "还可以输入"+wLength+"个字";
+				
+			}
+			function judge(){
+				if(userName.value&&userWords.value){
+					btn.style.background = "orangered";
+					btn.onclick = function(){
+	//	创建li
+						var newli = document.createElement("li");
+						newli.innerHTML = '<img src="img/1.jpg"><div class="right"><p class="top"><span class="name">'+userName.value+'</span><a href="#" id="remBtn">删除</a></p><p class="words">'+userWords.value+'</p></div>';
+	//	判断是否ul下是否有孩子，把的li添加到Ul中
+						if(mylist.children){
+							mylist.insertBefore(newli,mylist.firstElementChild);
+						}else{
+							mylist.appendChild(newli);
+						}
+	//	获取li的高度
+						var end = newli.offsetHeight;
+	//	把li的高度设置成0
+						newli.style.height = 0;
+						var start = 0;
+						var change = end-start;
+						var t=0;
+						var maxT = 50;
+						var time = setInterval(function(){
+							t++;
+							if(t>=maxT){
+								clearInterval(time);
+							}
+							newli.style.height = Tween.Linear(t,start,change,maxT)+'px';
+						},20)
+	//	添加li之后，删除多余样式
+						userName.value = "";
+						userWords.value = "";
+						WordsNum.innerHTML = "还可以输入200个字";
+						btn.style.background = "#ccc";
+						btn.onclick = null;
+	//	删除li	
+						var remBtn = mylist.getElementsByTagName("a");
+						for(var i=0;i<remBtn.length;i++){
+							remBtn[i].onclick = function(){
+								//mylist.removeChild(this.parentNode.parentNode.parentNode);
+								var myli = this.parentNode.parentNode.parentNode;
+								var start = newli.offsetHeight;
+								var end = 0;
+								var t=0;
+								var maxT = 50;
+								var change = end-start;
+								var time = setInterval(function(){
+									t++;
+									if(t>=maxT){
+										clearInterval(time);
+										mylist.removeChild(myli);
+									}
+									myli.style.height = Tween.Linear(t,start,change,maxT)+'px';
+								},20)
+							}
+						}
+					}
+				}else{
+					btn.style.background = "#ccc";
+				}
+			}
+		</script>
+	</body>
+</html>

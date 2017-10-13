@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<!--canvas 标签用于定义图形，只是一个图形容器，需要通过Js来绘制图形-->
+		<canvas id="can" width="400px" height="400px" style="border: 2px solid #00CCCC;"></canvas>
+		<script type="text/javascript">
+			var can = document.getElementById("can");
+			var ctx =	can.getContext("2d");//定义绘制的类型，二维绘图
+//	绘制矩形   fillStyle可以定义css的颜色、渐变、图案等；fillRect(x,y,w,h);
+			/*ctx.fillStyle = "#FFA500";
+			ctx.fillRect(0,0,100,100);*/
+//	绘制圆形    arc(x,y,r,start,stop,true/false)
+			/*ctx.arc(200,200,50,0,Math.PI*2,true);
+			ctx.strokeStyle = "aqua";
+			ctx.stroke();
+			ctx.fillStyle = "#FFA500";
+			ctx.fill();*/
+//	绘制 直线  moveTo(x,y)起点    lineTo(x,y)终点 
+			/*ctx.moveTo(400,0);
+			ctx.lineTo(0,400);
+			ctx.strokeStyle = "#FFA500";
+			ctx.stroke();*/
+//	绘制 文本   两种形式  
+		//第一种   fillText(text,x,y)  实心
+			//ctx.font = "30px 楷体"; // font 设置字体和字号
+			//ctx.fillText("Smile",30,45);
+		//第二种  strokeText(text,x,y,maxWidth)    空心
+			/*ctx.strokeStyle = "#00CCCC";
+			ctx.strokeText("hahah",60,80);*/
+//	绘制渐变   两种形式
+		//第一种    线性渐变   createLinearGradient(x,y,x1,y1);
+			var gra = ctx.createLinearGradient(20,20,70,70);
+			gra.addColorStop(0,"red");
+			gra.addColorStop(0.5,"green");
+			gra.addColorStop(1,"blue");
+			ctx.strokeStyle = gra;
+			ctx.font = "30px 楷体";
+			ctx.strokeText("你好",20,70);
+		//第二种  径向/圆渐变   createRadialGradient(x,y,r,x1,y1,r1);
+			/*var gra = ctx.createRadialGradient(200,200,30,200,200,100);
+			gra.addColorStop(0,"red");
+			gra.addColorStop(0.25,"orange");
+			gra.addColorStop(0.5,"yellow");
+			gra.addColorStop(0.75,"green");
+			gra.addColorStop(1,"pink");
+			ctx.fillStyle = gra;
+			ctx.arc(200,200,100,0,Math.PI*2,true);
+			ctx.fill();*/
+		</script>
+	</body>
+</html>
